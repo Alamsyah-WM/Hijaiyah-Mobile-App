@@ -4,7 +4,7 @@ using System.Collections;
 public class AuthController : MonoBehaviour
 {
     public GameObject splashPanel;
-    public GameObject welcomePanel;
+    public GameObject onboardingPanel;
     public GameObject loginPanel;
     public GameObject registerPanel;
 
@@ -20,7 +20,7 @@ public class AuthController : MonoBehaviour
     {
         // Pastikan kondisi awal
         splashPanel.SetActive(true);
-        welcomePanel.SetActive(false);
+        onboardingPanel.SetActive(false);
         loginPanel.SetActive(false);
         registerPanel.SetActive(false);
 
@@ -31,7 +31,7 @@ public class AuthController : MonoBehaviour
 
         // Pindah panel
         splashPanel.SetActive(false);
-        welcomePanel.SetActive(true);
+        onboardingPanel.SetActive(true);
         loginPanel.SetActive(false);
         registerPanel.SetActive(false);
     }
@@ -39,7 +39,7 @@ public class AuthController : MonoBehaviour
     public void ShowLogin()
     {
         splashPanel.SetActive(false);
-        welcomePanel.SetActive(false);
+        onboardingPanel.SetActive(false);
         loginPanel.SetActive(true);
         registerPanel.SetActive(false);
     }
@@ -47,7 +47,7 @@ public class AuthController : MonoBehaviour
     public void ShowRegister()
     {
         splashPanel.SetActive(false);
-        welcomePanel.SetActive(false);
+        onboardingPanel.SetActive(false);
         loginPanel.SetActive(false);
         registerPanel.SetActive(true);
     }
