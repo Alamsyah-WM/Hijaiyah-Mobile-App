@@ -1,55 +1,39 @@
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using System.Collections.Generic;
 
-public class ARPlaceObject : MonoBehaviour
+public class ARPlacementManager : MonoBehaviour
 {
-    public GameObject objectPrefab;
+    [SerializeField] private ARRaycastManager raycastManager;
+    [SerializeField] private GameObject objectPrefab;
 
-    private ARRaycastManager raycastManager;
-
-    private GameObject spawnedObject;
-
-    static List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-
-    void Start()
-    {
-        raycastManager = FindObjectOfType<ARRaycastManager>();
-    }
-
+    private readonly List<ARRaycastHit> hits =
+        new List<ARRaycastHit>();
 
     void Update()
     {
         if (Input.touchCount == 0)
             return;
 
-
         Touch touch = Input.GetTouch(0);
 
+        if (touch.phase != TouchPhase.Began)
+            return;
 
-        if (touch.phase == TouchPhase.Began)
+        if (raycastManager.Raycast(
+            touch.position,
+            hits,
+            TrackableType.PlaneWithinPolygon))
         {
+            Pose hitPose = hits[0].pose;
 
-            if (raycastManager.Raycast(
-                touch.position,
-                hits,
-                TrackableType.PlaneWithinPolygon))
-            {
-
-                Pose hitPose = hits[0].pose;
-
-
-                if (spawnedObject == null)
-                {
-                    spawnedObject = Instantiate(
-                        objectPrefab,
-                        hitPose.position,
-                        hitPose.rotation
-                    );
-                }
-            }
+            Instantiate(
+                objectPrefab,
+                hitPose.position,
+                hitPose.rotation
+            );
         }
     }
 }
